@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+
 function db() {
 
   const options = {
@@ -7,7 +9,7 @@ function db() {
     useUnifiedTopology: true,
   };
 
-  mongoose.connect('mongodb://localhost:23404/basededatos1')
+  mongoose.connect('mongodb://localhost:27017/droneservice')
 
   const { connection } = mongoose;
 
