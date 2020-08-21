@@ -21,6 +21,7 @@ module.exports = {
       await client.close();
     }
   }
+}
 // Metodo para crear un piloto
  /*  create(req, res) {
     const data = req.body;
