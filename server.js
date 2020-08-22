@@ -1,18 +1,18 @@
 const express = require("express");
-const app = express();
 const cors = require('cors');
 const Pilot = require("./src/models/pilot.model");
-const db = require("./src/db");
 const pilotRouter = require("./src/routes/pilot")
 
+const db = require("./src/db");
+
 const port = 8000;
+const app = express();
 
-//db();
-
+db();
 app.use(cors());
 app.use(express.json());
 
-app.use("/pilots", pilotRouter)
+app.use("/pilotos", pilotRouter)
 
 app.listen(port, () => 
   console.log("App listening localhost:8000"));

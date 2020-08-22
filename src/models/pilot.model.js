@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const pilotSchema = new Schema({ 
-  nombre: String,
+  name: String,
   published: { type: Boolean, default: false },
 },
 {
