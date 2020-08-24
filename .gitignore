@@ -2,3 +2,4 @@
 *.log
 .DS_Store
 /src/key.js
+.env

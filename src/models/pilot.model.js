@@ -2,7 +2,13 @@ const { Schema, model } = require('mongoose')
 
 const pilotSchema = new Schema({ 
   name: String,
-  published: { type: Boolean, default: false },
+  lastName: String,
+  email: String,
+  password: String,
+  phone: String,
+  department: String,
+  city: String,
+  userType: String,
 },
 {
   timestamps: true,
