@@ -1,9 +1,20 @@
 const express = require('express');
 const Pilot = require('../models/pilot.model');
+const Client = require('../models/client.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
+   
+  async list_clients(req, res) {
+    const clients = await Client.find({});
+
+    try {
+      res.status(200).json(clients);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  },
 
   async list(req, res) {
     const pilots = await Pilot.find({});
@@ -15,13 +26,16 @@ module.exports = {
     }
   },
 
-  // Metodo para crear un piloto
   async signup(req, res) {
     const data = req.body;
 
     try {
       const encryptedPassword = await bcrypt.hash(data.password, 8);
-      const pilot = await Pilot.create({ ...data, password: encryptedPassword });
+      if (data.userType === "pilot") {
+        const pilot = await Pilot.create({ ...data, password: encryptedPassword });
+      } else if (data.userType === "client") {
+        const client = await Client.create({ ...data, password: encryptedPassword });
+      }
 
       res.status(200).json();
     } catch(err) {
