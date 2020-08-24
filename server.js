@@ -19,11 +19,5 @@ app.use(express.json());
 app.use("/pilotos", pilotRouter);
 app.use("/media", mediaRouter);
 
-app.get('/', auth, (req, res) => {
-  // console.log(req.user);
-  // User.findById(req.user);
-  res.status(200).send('hola mundo');
-});
-
 app.listen(port, () => 
   console.log("App listening localhost:8000"));
