@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require('cors');
-const Pilot = require("./src/models/pilot.model");
 const pilotRouter = require("./src/routes/pilot")
 
 const db = require("./src/db");
