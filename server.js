@@ -1,13 +1,17 @@
-const express = require('express');
-const uuid = require('uuid-random');
+const express = require("express");
+const cors = require('cors');
+const pilotRouter = require("./src/routes/pilot")
+
+const db = require("./src/db");
+
+const port = 8000;
 const app = express();
+
+db();
+app.use(cors());
 app.use(express.json());
 
-const users = [];
+app.use("/pilotos", pilotRouter)
 
-app.get('/', (req, res) => {
-});
-
-
-
-app.listen(8000, () => console.log('App listening localhost:8000'));
+app.listen(port, () => 
+  console.log("App listening localhost:8000"));

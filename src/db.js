@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { url } = require("./key");
 
 function db() {
 
@@ -7,10 +8,10 @@ function db() {
     useUnifiedTopology: true,
   };
 
-  mongoose.connect('mongodb://localhost:23404/basededatos1')
-
+  mongoose.connect(url, options);
+  
   const { connection } = mongoose;
-
+  
   connection.once('open', () => console.log('Connection established sucessful'));
   connection.on('error', (error) => console.log('Something went wrong!'));
 
