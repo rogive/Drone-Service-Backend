@@ -1,3 +1,4 @@
+
 require('dotenv').config()
 const express = require("express");
 const cors = require('cors');
@@ -18,6 +19,7 @@ app.use(express.json());
 
 app.use("/pilotos", pilotRouter);
 app.use("/media", mediaRouter);
+
 
 app.listen(port, () => 
   console.log("App listening localhost:8000"));
