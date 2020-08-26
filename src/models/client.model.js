@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 
-const pilotSchema = new Schema({ 
+const clientSchema = new Schema({ 
   name: String,
   lastName: String,
   email: String,
@@ -14,6 +14,6 @@ const pilotSchema = new Schema({
   timestamps: true,
 });
 
-const Pilot = model('Pilot',pilotSchema)
+const Client = model('Client',clientSchema)
 
-module.exports = Pilot
+module.exports = Client
