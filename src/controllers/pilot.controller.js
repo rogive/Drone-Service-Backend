@@ -4,6 +4,8 @@ const Client = require('../models/client.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const app = express();
+
 module.exports = {
    
   async list_clients(req, res) {
@@ -20,7 +22,6 @@ module.exports = {
     try {
       const pilots = await Pilot.find({});
       res.status(200).json(pilots);
-
     } catch (err) {
       res.status(400).json(err);
     }
@@ -76,7 +77,6 @@ module.exports = {
       const { id } = req.params;
       const pilot = await Pilot.findById(id);
       res.status(200).json(pilot);
-
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
@@ -88,7 +88,6 @@ module.exports = {
       const data = req.body;
       const pilot = await Pilot.findByIdAndUpdate(id, data, { new: true })
       res.status(200).json(pilot);
-
     } catch (err) {
       res.status(400).json(err);
     }
@@ -99,7 +98,6 @@ module.exports = {
       const { id } = req.params;
       const pilot = await Pilot.findByIdAndDelete(id)
       res.status(200).json(pilot);
-
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }

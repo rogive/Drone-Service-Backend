@@ -5,9 +5,9 @@ const app = express();
 module.exports = {
 
   async list(req, res) {
-    const media = await Media.find();
-
     try {
+      const media = await Media.find();
+
       res.status(200).json(media);
     } catch (err) {
       res.status(400).json(err);
@@ -15,10 +15,10 @@ module.exports = {
   },
 
   async create(req, res) {
-    const data = req.body;
-
-    const media = await Media.create(data);
     try {
+      const data = req.body;
+      const media = await Media.create(data);
+
       res.status(200).json(media);
     } catch (err) {
       res.status(400).json(err);
@@ -26,10 +26,10 @@ module.exports = {
   },
 
   async show(req, res) {
-    const { id } = req.params;
-    const media = await Media.findById(id);
-
     try {
+      const { id } = req.params;
+      const media = await Media.findById(id);
+
       res.status(200).json(media);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
@@ -37,10 +37,10 @@ module.exports = {
   },
 
   async showpilot(req, res) {
-    const { id } = req.params;
-    const media = await Media.find({pilotId: id});
-
     try {
+      const { id } = req.params;
+      const media = await Media.find({pilotId: id});
+
       res.status(200).json(media);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
@@ -48,12 +48,11 @@ module.exports = {
   },
 
   async update(req, res) {
-    const { id } = req.params;
-    const data = req.body;
-
-    const media = await Media.findByIdAndUpdate(id, data, { new: true })
-
     try {
+      const { id } = req.params;
+      const data = req.body;
+      const media = await Media.findByIdAndUpdate(id, data, { new: true })
+
       res.status(200).json(media);
     } catch (err) {
       res.status(400).json(err);
@@ -61,16 +60,13 @@ module.exports = {
   },
 
   async destroy(req, res) {
-    const { id } = req.params;
-
-    const media = await Media.findByIdAndDelete(id)
-
     try {
+      const { id } = req.params;
+      const media = await Media.findByIdAndDelete(id)
+
       res.status(200).json(media);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
   }
-
-
 }

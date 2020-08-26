@@ -1,3 +1,4 @@
+
 require('dotenv').config()
 const express = require("express");
 const cors = require('cors');
@@ -15,6 +16,9 @@ const app = express();
 db();
 app.use(cors());
 app.use(express.json());
+
+app.use("/pilotos", pilotRouter);
+app.use("/media", mediaRouter);
 
 app.use("/pilotos", pilotRouter);
 app.use("/media", mediaRouter);
