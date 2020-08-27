@@ -1,5 +1,6 @@
 const express = require('express');
 const Media = require('../models/media.model');
+const Pilot = require('../models/pilot.model')
 const app = express();
 
 module.exports = {
@@ -17,7 +18,13 @@ module.exports = {
   async create(req, res) {
     try {
       const data = req.body;
-      const media = await Media.create(data);
+      const { pilotId }  = req.body;
+
+      const pilot = await Pilot.findById(pilotId)
+      const media = await Media.create({...data, pilot })
+
+      pilot.queries.push(media)
+      await pilot.save()
 
       res.status(200).json(media);
     } catch (err) {
