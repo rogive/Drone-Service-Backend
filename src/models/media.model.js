@@ -1,9 +1,13 @@
 const { Schema, model } = require('mongoose')
 
 const mediaSchema = new Schema({ 
-  pilotId: String,
   url: String,
-  type: String
+  type: String,
+  pilot: { 
+    type: Schema.Types.ObjectId, 
+    ref: 'Pilot', 
+    require: true
+  },
 },
 {
   timestamps: true,
