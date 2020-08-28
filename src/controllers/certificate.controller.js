@@ -1,13 +1,16 @@
 const express = require('express');
 const Certificate = require('../models/certificate.model');
-const app = express();
+const Pilot = require('../models/pilot.model');
 
 module.exports = {
 
   async list(req, res) {
     try {
-      const certificate = await Certificate.find();
-
+      const certificate = await Certificate.find()
+      .populate({
+        path: 'pilot',
+        select: '_id name', // separados por un espacio
+      })
       res.status(200).json(certificate);
     } catch (err) {
       res.status(400).json(err);
@@ -17,7 +20,13 @@ module.exports = {
   async create(req, res) {
     try {
       const data = req.body;
-      const certificate = await Certificate.create(data);
+      const { pilotId }  = req.body;
+
+      const pilot = await Pilot.findById(pilotId)
+      const certificate = await Certificate.create({...data, pilot })
+
+      pilot.certificate.push(certificate)
+      await pilot.save()
 
       res.status(200).json(certificate);
     } catch (err) {
@@ -39,7 +48,7 @@ module.exports = {
   async showpilot(req, res) {
     try {
       const { id } = req.params;
-      const certificate = await Certificate.find({pilotId: id});
+      const certificate = await Certificate.find({pilot: id});
 
       res.status(200).json(certificate);
     } catch (err) {

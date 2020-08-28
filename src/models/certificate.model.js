@@ -1,10 +1,14 @@
 const { Schema, model } = require('mongoose')
 
 const certificateSchema = new Schema({ 
-  pilotId: String,
   name: String,
   url: String,
-  type: String
+  type: String,
+  pilot: { 
+    type: Schema.Types.ObjectId, 
+    ref: 'Pilot', 
+    require: true
+  }
 },
 {
   timestamps: true,

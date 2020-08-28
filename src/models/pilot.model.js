@@ -8,10 +8,14 @@ const pilotSchema = new Schema({
   phone: String,
   department: String,
   city: String,
+  certificates: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Certificate',
+  }],
   media: [{
     type: Schema.Types.ObjectId,
     ref: 'Media',
-  }],
+  }]
 },
 {
   timestamps: true,
