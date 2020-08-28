@@ -26,7 +26,7 @@ module.exports = {
       const pilot = await Pilot.findById(pilotId)
       const media = await Media.create({...data, pilot })
 
-      pilot.queries.push(media)
+      pilot.media.push(media)
       await pilot.save()
 
       res.status(200).json(media);
@@ -49,7 +49,7 @@ module.exports = {
   async showpilot(req, res) {
     try {
       const { id } = req.params;
-      const media = await Media.find({pilotId: id});
+      const media = await Media.find({pilot: id});
 
       res.status(200).json(media);
     } catch (err) {
