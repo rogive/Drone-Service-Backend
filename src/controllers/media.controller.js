@@ -1,14 +1,17 @@
 const express = require('express');
 const Media = require('../models/media.model');
-const Pilot = require('../models/pilot.model')
+const Pilot = require('../models/pilot.model');
 const app = express();
 
 module.exports = {
 
   async list(req, res) {
     try {
-      const media = await Media.find();
-
+      const media = await Media.find()
+      .populate({
+        path: 'pilot',
+        select: '_id name', // separados por un espacio
+      })
       res.status(200).json(media);
     } catch (err) {
       res.status(400).json(err);
