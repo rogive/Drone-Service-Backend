@@ -8,7 +8,10 @@ const pilotSchema = new Schema({
   phone: String,
   department: String,
   city: String,
-  userType: String,
+  media: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media',
+  }],
 },
 {
   timestamps: true,
