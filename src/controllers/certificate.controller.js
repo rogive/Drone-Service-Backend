@@ -25,7 +25,7 @@ module.exports = {
       const pilot = await Pilot.findById(pilotId)
       const certificate = await Certificate.create({...data, pilot })
 
-      pilot.certificate.push(certificate)
+      pilot.certificates.push(certificate)
       await pilot.save()
 
       res.status(200).json(certificate);
