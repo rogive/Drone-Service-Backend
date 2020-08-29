@@ -22,10 +22,14 @@ module.exports = {
       const { pilotId }  = req.body;
 
       const pilot = await Pilot.findById(pilotId)
-      const service = await Service.create({...data, pilot })
+      const service = await Service.create({...data, pilot})
 
       pilot.services.push(service)
       await pilot.save()
+
+      const thisservice = await Service.findById(service._id)
+      thisservice.pilots.push(pilot)
+      await thisservice.save()
 
       res.status(200).json(service);
     } catch (err) {

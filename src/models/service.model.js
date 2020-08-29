@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose')
 
 const serviceSchema = new Schema({ 
   name: String,
+  url: String,
   pilots: [{
     type: Schema.Types.ObjectId,
     ref: 'Pilot',
