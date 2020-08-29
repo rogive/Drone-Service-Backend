@@ -101,5 +101,26 @@ module.exports = {
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
+  },
+
+  async filter(req, res){
+    const { info } = req.body
+    let pilot 
+    try{  
+          if(info.categorie && info.departmentID && info.city){
+            pilot = await Pilot.find({$and:[{"categorie" : info.categorie},{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
+          }else if(info.departmentID && info.city){
+            pilot = await Pilot.find({$and:[{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
+          }else if(info.categorie){
+            pilot = await Pilot.find({ "categorie" : info.categorie  });
+          }else if(info.departmentID){
+            pilot = await Pilot.find({ "departmentID" : parseInt(info.departmentID) });
+          }else if(info.city){
+            pilot = await Pilot.find({"city":info.city})
+          }
+      res.status(200).json(pilot)
+    }catch (err){
+      console.log(err)
+    }
   }
 }

@@ -8,5 +8,7 @@ router.route("/login").post(pilotController.signin)
 router.route("/listar/:id").get(pilotController.show)
 router.route("/actualizar/:id").put(pilotController.update)
 router.route("/eliminar/:id").delete(pilotController.destroy)
+router.route("/filtrar").post(pilotController.filter)
+
 
 module.exports = router
