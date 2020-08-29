@@ -15,6 +15,10 @@ const pilotSchema = new Schema({
   media: [{
     type: Schema.Types.ObjectId,
     ref: 'Media',
+  }],
+  services: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Service',
   }]
 },
 {
