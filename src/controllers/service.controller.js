@@ -51,7 +51,7 @@ module.exports = {
   async showpilot(req, res) {
     try {
       const { id } = req.params;
-      const service = await Service.find({pilot: id});
+      const service = await Service.find({pilots: id});
 
       res.status(200).json(service);
     } catch (err) {
