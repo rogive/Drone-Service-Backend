@@ -1,14 +1,18 @@
 const { Schema, model } = require('mongoose')
 
-const querieSchema = new Schema({ 
+const requestSchema = new Schema({ 
   certified: String,
   description: String,
-  media: Array
+  media: Array,
+  clients: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Client',
+  }]
 },
 {
   timestamps: true,
 });
 
-const Querie = model('Queries',querieSchema)
+const Request = model('Requests',requestSchema)
 
-module.exports = Querie
+module.exports = Request

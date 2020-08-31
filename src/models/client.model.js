@@ -9,6 +9,10 @@ const clientSchema = new Schema({
   department: String,
   city: String,
   userType: String,
+  requests: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Request',
+  }]
 },
 {
   timestamps: true,

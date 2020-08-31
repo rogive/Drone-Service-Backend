@@ -1,58 +1,58 @@
-const Querie = require('../models/querie.model');
-
+const Request = require('../models/request.model');
+const Client = require('../models/client.model');
 module.exports = {
 
-  async list(req, res) {
+/*   async list(req, res) {
     try {
-      const querie = await Querie.find()
+      const request = await Request.find()
       .populate({
-        path: 'pilot',
+        path: 'client',
         select: '_id name', // separados por un espacio
       })
-      res.status(200).json(querie);
+      res.status(200).json(request);
     } catch (err) {
       res.status(400).json(err);
     }
   },
-
+ */
   async create(req, res) {
     try {
       const data = req.body;
-      const { pilotId }  = req.body;
+      const { clientId }  = req.body;
 
-      const pilot = await Pilot.findById(pilotId)
-      const querie = await Querie.create({...data, pilot})
+      const client = await Client.findById(clientId)
+      const request = await Request.create({...data, client})
 
-      pilot.queries.push(querie)
-      await pilot.save()
+      client.requests.push(request)
+      await client.save()
 
-      const thisquerie = await Querie.findById(querie._id)
-      thisquerie.pilots.push(pilot)
-      await thisquerie.save()
+      const thisrequest = await Request.findById(request._id)
+      thisrequest.clients.push(client)
+      await thisrequest.save()
 
-      res.status(200).json(querie);
+      res.status(200).json(request);
     } catch (err) {
       res.status(400).json(err);
     }
-  },
-
+  }
+/* 
   async show(req, res) {
     try {
       const { id } = req.params;
-      const querie = await Querie.findById(id);
+      const request = await Request.findById(id);
 
-      res.status(200).json(querie);
+      res.status(200).json(request);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
   },
 
-  async showpilot(req, res) {
+  async showclient(req, res) {
     try {
       const { id } = req.params;
-      const querie = await Querie.find({pilots: id});
+      const request = await Request.find({clients: id});
 
-      res.status(200).json(querie);
+      res.status(200).json(request);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
@@ -62,9 +62,9 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const querie = await Querie.findByIdAndUpdate(id, data, { new: true })
+      const request = await Request.findByIdAndUpdate(id, data, { new: true })
 
-      res.status(200).json(querie);
+      res.status(200).json(request);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -73,11 +73,11 @@ module.exports = {
   async destroy(req, res) {
     try {
       const { id } = req.params;
-      const querie = await Querie.findByIdAndDelete(id)
+      const request = await Request.findByIdAndDelete(id)
 
-      res.status(200).json(querie);
+      res.status(200).json(request);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
-  }
+  } */
 }
