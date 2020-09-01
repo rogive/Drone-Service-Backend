@@ -1,9 +1,10 @@
 const { Schema, model } = require('mongoose')
 
-const mediaSchema = new Schema({ 
+const certificateSchema = new Schema({ 
+  name: String,
   url: String,
   type: String,
-  pilot: {
+  pilot: { 
     type: Schema.Types.ObjectId, 
     ref: 'Pilot', 
     require: true
@@ -13,6 +14,6 @@ const mediaSchema = new Schema({
   timestamps: true,
 });
 
-const Media = model('Media',mediaSchema)
+const Certificate = model('Certificates',certificateSchema)
 
-module.exports = Media
+module.exports = Certificate

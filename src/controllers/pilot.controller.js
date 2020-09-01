@@ -1,10 +1,7 @@
-const express = require('express');
 const Pilot = require('../models/pilot.model');
 const Client = require('../models/client.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const app = express();
 
 module.exports = {
    

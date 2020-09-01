@@ -1,11 +1,10 @@
-
 require('dotenv').config()
 const express = require("express");
 const cors = require('cors');
-const Pilot = require("./src/models/pilot.model");
 const pilotRouter = require("./src/routes/pilot");
 const mediaRouter = require("./src/routes/media");
-
+const certificateRouter = require("./src/routes/certificate");
+const serviceRouter = require("./src/routes/service");
 const { auth } = require('./src/utils/middlewares')
 
 const db = require("./src/db");
@@ -19,7 +18,8 @@ app.use(express.json());
 
 app.use("/pilotos", pilotRouter);
 app.use("/media", mediaRouter);
-
+app.use("/certificados", certificateRouter);
+app.use("/servicios", serviceRouter);
 
 app.listen(port, () => 
   console.log("App listening localhost:8000"));

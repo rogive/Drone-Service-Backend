@@ -49,6 +49,18 @@ const pilotSchema = new Schema({
     required: [ true, 'Por favor seleccione una ciudad' ]
   },
   userType: String,
+  certificates: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Certificate',
+  }],
+  media: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media',
+  }],
+  services: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Service',
+  }]
 },{ 
   timestamps: true 
 })
