@@ -1,10 +1,7 @@
-const express = require('express');
 const Pilot = require('../models/pilot.model');
 const Client = require('../models/client.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-const app = express();
 
 module.exports = {
    
@@ -72,13 +69,18 @@ module.exports = {
     }
   },
 
-  async show(req, res) {
+  async findUser(req, res) {
     try {
-      const { id } = req.params;
-      const pilot = await Pilot.findById(id);
-      res.status(200).json(pilot);
-    } catch (err) {
-      res.status(400).json({ message: `Could not find task with id ${id}` });
+      const { id } = req.params
+      const pilot = await Pilot.findById( id )
+      
+      if(!pilot) {
+        throw Error('El piloto no existe');
+      }
+
+      res.status(200).json({ pilot });
+    } catch(err) {
+      res.status(401).json({ message: `No se encontró el usuario con id ${id}` })
     }
   },
 

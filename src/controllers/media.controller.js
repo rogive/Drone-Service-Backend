@@ -1,7 +1,6 @@
 const express = require('express');
 const Media = require('../models/media.model');
 const Pilot = require('../models/pilot.model');
-const app = express();
 
 module.exports = {
 
