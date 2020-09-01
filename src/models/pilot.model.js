@@ -1,13 +1,54 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model, models } = require('mongoose')
+
+const emailRegexp = /((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))/;
+const phoneRegexp = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\./0-9]*$/
+
+const uniqueEmail = {
+  async validator(email) {
+    try {
+      const pilot = await models.Pilot.findOne({ email });
+      return !pilot;
+    }
+    catch (err) {
+      return false;
+    }
+  },
+  message: 'El email ya existe'
+}
 
 const pilotSchema = new Schema({ 
-  name: String,
-  lastName: String,
-  email: String,
-  password: String,
-  phone: String,
-  department: String,
-  city: String,
+  name: {
+    type: String,
+    required: [ true, 'El campo nombres es requerido' ]
+  },
+  lastName: {
+    type: String,
+    required: [ true, 'El campo apellidos es requerido' ]
+  },
+  email: {
+    type: String,
+    required: [ true, 'El campo E-Mail es requerido' ],
+    match: [ emailRegexp, 'E-mail inválido'],
+    validate: [ uniqueEmail ],
+  },
+  password: {
+    type: String,
+    required: [ true, 'El campo contraseña es requerido' ]
+  },
+  phone: {
+    type: String,
+    match: [ phoneRegexp, 'Número de celular inválido'],
+    minlength: [10, 'El número de celular debe tener mínimo 10 caracteres']
+  },
+  department: {
+    type: String,
+    required: [ true, 'Por favor seleccione un departamento' ]
+  },
+  city: {
+    type: String,
+    required: [ true, 'Por favor seleccione una ciudad' ]
+  },
+  userType: String,
   certificates: [{
     type: Schema.Types.ObjectId,
     ref: 'Certificate',
@@ -20,10 +61,9 @@ const pilotSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Service',
   }]
-},
-{
-  timestamps: true,
-});
+},{ 
+  timestamps: true 
+})
 
 const Pilot = model('Pilot',pilotSchema)
 
