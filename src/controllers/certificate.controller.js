@@ -1,3 +1,6 @@
+const express = require('express');
+const Certificate = require('../models/certificate.model');
+const app = express();
 const Certificate = require('../models/certificate.model');
 const Pilot = require('../models/pilot.model');
 
@@ -5,6 +8,7 @@ module.exports = {
 
   async list(req, res) {
     try {
+
       const certificate = await Certificate.find()
       .populate({
         path: 'pilot',
@@ -22,7 +26,7 @@ module.exports = {
       const { pilotId }  = req.body;
 
       const pilot = await Pilot.findById(pilotId)
-      const certificate = await Certificate.create({...data, pilot })
+      const certificate = await Certificate.create({data})
 
       pilot.certificates.push(certificate)
       await pilot.save()
@@ -47,7 +51,7 @@ module.exports = {
   async showpilot(req, res) {
     try {
       const { id } = req.params;
-      const certificate = await Certificate.find({pilot: id});
+      const certificate = await Certificate.find({pilotId: id});
 
       res.status(200).json(certificate);
     } catch (err) {

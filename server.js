@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require('cors');
 const pilotRouter = require("./src/routes/pilot");
 const mediaRouter = require("./src/routes/media");
+const clientRouter = require("./src/routes/client");
+const querieRouter = require("./src/routes/querie");
 const certificateRouter = require("./src/routes/certificate");
 const serviceRouter = require("./src/routes/service");
 const { auth } = require('./src/utils/middlewares')
@@ -18,6 +20,9 @@ app.use(express.json());
 
 app.use("/pilotos", pilotRouter);
 app.use("/media", mediaRouter);
+
+app.use("/client", clientRouter);
+app.use("/querie", querieRouter);
 app.use("/certificados", certificateRouter);
 app.use("/servicios", serviceRouter);
 

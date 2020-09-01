@@ -8,12 +8,17 @@ const clientSchema = new Schema({
   phone: String,
   department: String,
   city: String,
-  userType: String,
+  queries: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Queries',
+  }],
 },
 {
   timestamps: true,
 });
 
+
 const Client = model('Client',clientSchema)
+
 
 module.exports = Client
