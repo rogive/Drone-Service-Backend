@@ -20,7 +20,6 @@ app.use(express.json());
 
 app.use("/pilotos", pilotRouter);
 app.use("/media", mediaRouter);
-
 app.use("/client", clientRouter);
 app.use("/querie", querieRouter);
 app.use("/certificados", certificateRouter);

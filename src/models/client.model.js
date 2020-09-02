@@ -7,14 +7,14 @@ const uniqueEmail = {
   async validator(email) {
     try {
       const pilot = await models.Pilot.findOne({ email });
-      const client = await model.Client.findOne({ email });
+      const client = await models.Client.findOne({ email });
       return (!pilot && !client);
     }
     catch (err) {
       return false;
     }
   },
-  message: 'El email ya existe'
+  message: 'El email ya existe1'
 }
 
 const clientSchema = new Schema({ 
