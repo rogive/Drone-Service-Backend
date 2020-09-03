@@ -1,19 +1,8 @@
 const Pilot = require('../models/pilot.model');
-const Client = require('../models/client.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-   
-  async list_clients(req, res) {
-    try {
-      const clients = await Client.find({});
-      res.status(200).json(clients);
-
-    } catch (err) {
-      res.status(400).json(err);
-    }
-  },
 
   async list(req, res) {
     try {
@@ -28,18 +17,11 @@ module.exports = {
     try {
       const data = req.body;
       const encryptedPassword = await bcrypt.hash(data.password, 8);
-
-      if (data.userType === "pilot") {
-        const pilot = await Pilot.create({ ...data, password: encryptedPassword });
-      } else if (data.userType === "client") {
-        const client = await Client.create({ ...data, password: encryptedPassword });
-      }
+      const pilot = await Pilot.create({ ...data, password: encryptedPassword });
       res.status(200).json();
-
     } catch(err) {
       res.status(400).json(err);
     }
-
   },
 
   async signin(req, res) {
@@ -77,7 +59,7 @@ module.exports = {
       if(!pilot) {
         throw Error('El piloto no existe');
       }
-
+      
       res.status(200).json({ pilot });
     } catch(err) {
       res.status(401).json({ message: `No se encontró el usuario con id ${id}` })

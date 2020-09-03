@@ -1,7 +1,6 @@
 const express = require('express');
 const Certificate = require('../models/certificate.model');
 const app = express();
-const Certificate = require('../models/certificate.model');
 const Pilot = require('../models/pilot.model');
 
 module.exports = {
