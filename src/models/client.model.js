@@ -53,9 +53,9 @@ const clientSchema = new Schema({
     type: String,
     required: [ true, 'El tipo de usuario no está definido, intente registrarse nuevamente']
   },
-  requests: [{
+  solicitudes: [{
     type: Schema.Types.ObjectId,
-    ref: 'Request',
+    ref: 'Solicitude',
   }]
 },{ 
   timestamps: true 
