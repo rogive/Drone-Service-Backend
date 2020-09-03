@@ -21,7 +21,7 @@ app.use(express.json());
 app.use("/pilotos", pilotRouter);
 app.use("/media", mediaRouter);
 app.use("/client", clientRouter);
-app.use("/solicitudes", solicitudesRouter);
+app.use("/solicitudes", solicitudeRouter);
 app.use("/certificados", certificateRouter);
 app.use("/servicios", serviceRouter);
 
