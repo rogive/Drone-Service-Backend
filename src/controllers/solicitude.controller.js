@@ -21,14 +21,10 @@ module.exports = {
       const { clientId }  = req.body;
 
       const client = await Client.findById(clientId)
-      console.log("1")
       const solicitude = await Solicitude.create({...data, client })
-      console.log("2")
       
       client.solicitudes.push(solicitude)
-      console.log(`3`)
-      await client.save()
-      console.log("4")
+      await client.save({validateBeforeSave: false})
 
       res.status(200).json(solicitude);
     } catch (err) {
