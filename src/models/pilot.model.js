@@ -7,7 +7,8 @@ const uniqueEmail = {
   async validator(email) {
     try {
       const pilot = await models.Pilot.findOne({ email });
-      return !pilot;
+      const client = await model.Client.findOne({ email });
+      return (!pilot && !client);
     }
     catch (err) {
       return false;
@@ -48,7 +49,22 @@ const pilotSchema = new Schema({
     type: String,
     required: [ true, 'Por favor seleccione una ciudad' ]
   },
-  userType: String,
+  userType: { 
+    type: String,
+    required: [ true, 'El tipo de usuario no está definido, intente registrarse nuevamente']
+  },
+  certificates: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Certificate',
+  }],
+  media: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media',
+  }],
+  services: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Service',
+  }]
 },{ 
   timestamps: true 
 })

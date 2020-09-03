@@ -1,17 +1,16 @@
-const express = require('express');
-const Media = require('../models/media.model');
+const Service = require('../models/service.model');
 const Pilot = require('../models/pilot.model');
 
 module.exports = {
 
   async list(req, res) {
     try {
-      const media = await Media.find()
+      const service = await Service.find()
       .populate({
         path: 'pilot',
         select: '_id name', // separados por un espacio
       })
-      res.status(200).json(media);
+      res.status(200).json(service);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -23,12 +22,16 @@ module.exports = {
       const { pilotId }  = req.body;
 
       const pilot = await Pilot.findById(pilotId)
-      const media = await Media.create({...data, pilot })
+      const service = await Service.create({...data, pilot})
 
-      pilot.media.push(media)
+      pilot.services.push(service)
       await pilot.save()
 
-      res.status(200).json(media);
+      const thisservice = await Service.findById(service._id)
+      thisservice.pilots.push(pilot)
+      await thisservice.save()
+
+      res.status(200).json(service);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -37,9 +40,9 @@ module.exports = {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const media = await Media.findById(id);
+      const service = await Service.findById(id);
 
-      res.status(200).json(media);
+      res.status(200).json(service);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
@@ -48,9 +51,9 @@ module.exports = {
   async showpilot(req, res) {
     try {
       const { id } = req.params;
-      const media = await Media.find({pilot: id});
+      const service = await Service.find({pilots: id});
 
-      res.status(200).json(media);
+      res.status(200).json(service);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
@@ -60,9 +63,9 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const media = await Media.findByIdAndUpdate(id, data, { new: true })
+      const service = await Service.findByIdAndUpdate(id, data, { new: true })
 
-      res.status(200).json(media);
+      res.status(200).json(service);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -71,9 +74,9 @@ module.exports = {
   async destroy(req, res) {
     try {
       const { id } = req.params;
-      const media = await Media.findByIdAndDelete(id)
+      const service = await Service.findByIdAndDelete(id)
 
-      res.status(200).json(media);
+      res.status(200).json(service);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }

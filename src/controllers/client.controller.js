@@ -1,4 +1,4 @@
-const Pilot = require('../models/pilot.model');
+const Client = require('../models/client.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -6,8 +6,8 @@ module.exports = {
 
   async list(req, res) {
     try {
-      const pilots = await Pilot.find({});
-      res.status(200).json(pilots);
+      const clients = await Client.find({});
+      res.status(200).json(clients);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -17,7 +17,7 @@ module.exports = {
     try {
       const data = req.body;
       const encryptedPassword = await bcrypt.hash(data.password, 8);
-      const pilot = await Pilot.create({ ...data, password: encryptedPassword });
+      const client = await Client.create({ ...data, password: encryptedPassword });
       res.status(200).json();
     } catch(err) {
       res.status(400).json(err);
@@ -27,25 +27,25 @@ module.exports = {
   async signin(req, res) {
     try {
       const { email, password } = req.body;
-      const pilot = await Pilot.findOne({ email });
+      const client = await Client.findOne({ email });
 
-      if(!pilot) {
+      if(!client) {
         throw Error('El usuario no existe');
       }
 
-      const isValid = await bcrypt.compare(password, pilot.password);
+      const isValid = await bcrypt.compare(password, client.password);
 
       if(!isValid) {
         throw Error('Usuario o contraseña invalido!');
       }
 
       const token = jwt.sign(
-        { id: pilot._id },
+        { id: client._id },
         process.env.SECRET,
         { expiresIn: 60 * 60 * 24 * 365 }
       );
 
-      res.status(200).json({token, pilot});
+      res.status(200).json({token, client});
     } catch(err) {
       res.status(401).json({ message: err.message })
     }
@@ -54,13 +54,13 @@ module.exports = {
   async findUser(req, res) {
     try {
       const { id } = req.params
-      const pilot = await Pilot.findById( id )
+      const client = await Client.findById( id )
       
-      if(!pilot) {
-        throw Error('El piloto no existe');
+      if(!client) {
+        throw Error('El Cliento no existe');
       }
-      
-      res.status(200).json({ pilot });
+
+      res.status(200).json({ client });
     } catch(err) {
       res.status(401).json({ message: `No se encontró el usuario con id ${id}` })
     }
@@ -70,8 +70,8 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const pilot = await Pilot.findByIdAndUpdate(id, data, { new: true })
-      res.status(200).json(pilot);
+      const client = await Client.findByIdAndUpdate(id, data, { new: true })
+      res.status(200).json(client);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -80,8 +80,8 @@ module.exports = {
   async destroy(req, res) {
     try {
       const { id } = req.params;
-      const pilot = await Pilot.findByIdAndDelete(id)
-      res.status(200).json(pilot);
+      const client = await Client.findByIdAndDelete(id)
+      res.status(200).json(client);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
@@ -89,20 +89,20 @@ module.exports = {
 
   async filter(req, res){
     const { info } = req.body
-    let pilot 
+    let client 
     try{  
           if(info.categorie && info.departmentID && info.city){
-            pilot = await Pilot.find({$and:[{"categorie" : info.categorie},{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
+            client = await Client.find({$and:[{"categorie" : info.categorie},{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
           }else if(info.departmentID && info.city){
-            pilot = await Pilot.find({$and:[{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
+            client = await Client.find({$and:[{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
           }else if(info.categorie){
-            pilot = await Pilot.find({ "categorie" : info.categorie  });
+            client = await Client.find({ "categorie" : info.categorie  });
           }else if(info.departmentID){
-            pilot = await Pilot.find({ "departmentID" : parseInt(info.departmentID) });
+            client = await Client.find({ "departmentID" : parseInt(info.departmentID) });
           }else if(info.city){
-            pilot = await Pilot.find({"city":info.city})
+            client = await Client.find({"city":info.city})
           }
-      res.status(200).json(pilot)
+      res.status(200).json(client)
     }catch (err){
       console.log(err)
     }
