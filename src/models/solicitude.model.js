@@ -1,6 +1,10 @@
 const { Schema, model } = require('mongoose')
 
 const requestSchema = new Schema({
+  servicetitle: {
+    type: String,
+    required: [ true, 'El campo tipo de servicio es requerido' ]
+  },
   servicetype: {
     type: String,
     required: [ true, 'El campo tipo de servicio es requerido' ]
@@ -14,8 +18,7 @@ const requestSchema = new Schema({
     required: [ true, 'El campo equipo propio es requerido' ]
   },
   equipment: {
-    type: String,
-    required: [ true, 'El campo equipo específico es requerido' ]
+    type: String
   },
   description: {
     type: String,
