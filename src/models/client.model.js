@@ -30,7 +30,7 @@ const clientSchema = new Schema({
     type: String,
     required: [ true, 'El campo E-Mail es requerido' ],
     match: [ emailRegexp, 'E-mail inválido'],
-    validate: [ uniqueEmail ],
+    validator: [ uniqueEmail ],
   },
   password: {
     type: String,
@@ -53,9 +53,9 @@ const clientSchema = new Schema({
     type: String,
     required: [ true, 'El tipo de usuario no está definido, intente registrarse nuevamente']
   },
-  queries: [{
+  solicitudes: [{
     type: Schema.Types.ObjectId,
-    ref: 'Queries',
+    ref: 'Solicitude',
   }]
 },{ 
   timestamps: true 

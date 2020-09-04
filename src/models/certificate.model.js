@@ -1,7 +1,10 @@
 const { Schema, model } = require('mongoose')
 
 const certificateSchema = new Schema({ 
-  name: String,
+  name: {
+    type: String,
+    required: [ true, 'Se requiere un documento para esta accion' ]
+  },
   url: String,
   type: String,
   pilot: { 
