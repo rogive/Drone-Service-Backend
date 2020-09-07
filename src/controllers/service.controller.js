@@ -63,7 +63,6 @@ module.exports = {
     try {
       const { id } = req.params;
       const { pilotId }  = req.body;
-      console.log(req.body, req.params)
       const pilot = await Pilot.findById(pilotId)
       const service = await Service.findById(id)
       const { name }  = service;

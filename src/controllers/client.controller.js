@@ -72,7 +72,6 @@ module.exports = {
     try {
       const { id } = req.params;
       const { data } = req.body;
-      console.log(data);
       const client = await Client.findByIdAndUpdate(id, data, {
         new: true,
         useFindAndModify: false,

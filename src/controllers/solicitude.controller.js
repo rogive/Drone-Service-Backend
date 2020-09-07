@@ -80,7 +80,6 @@ module.exports = {
 
   async filter(req, res) {
     const { info } = req.body;
-    console.log(info);
     let solicitude;
     try {
       if (info.categorie && info.departmentID && info.city) {
