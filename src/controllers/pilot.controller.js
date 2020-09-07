@@ -95,6 +95,8 @@ module.exports = {
             pilot = await Pilot.find({$and:[{"services.name" : info.categorie},{"department" : parseInt(info.departmentID)},{"city":info.city}]}).populate("media");
           }else if(info.departmentID && info.city){
             pilot = await Pilot.find({$and:[{"department" : parseInt(info.departmentID)},{"city":info.city}]}).populate("media");
+          }else if(info.categorie && info.departmentID){
+            pilot = await Pilot.find({$and:[{"services.name" : info.categorie},{"department" : parseInt(info.departmentID)}]}).populate("media");
           }else if(info.categorie){
             pilot = await Pilot.find({ "services.name" : info.categorie  }).populate("media");
           }else if(info.departmentID){
