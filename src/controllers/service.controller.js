@@ -20,12 +20,12 @@ module.exports = {
     try {
       const data = req.body;
       const { pilotId }  = req.body;
-
+      
       const pilot = await Pilot.findById(pilotId)
       const service = await Service.create({...data, pilot})
 
       pilot.services.push(service)
-      await pilot.save()
+      await pilot.save({validateBeforeSave: false})
 
       const thisservice = await Service.findById(service._id)
       thisservice.pilots.push(pilot)

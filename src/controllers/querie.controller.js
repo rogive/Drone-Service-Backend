@@ -32,7 +32,7 @@ module.exports = {
       console.log(querie)
 
       client.queries.push(querie)
-      await client.save()
+      await client.save({validateBeforeSave: false})
 
       res.status(200).json(querie);
     } catch (err) {

@@ -89,18 +89,19 @@ module.exports = {
 
   async filter(req, res){
     const { info } = req.body
+    console.log(info)
     let pilot 
     try{  
           if(info.categorie && info.departmentID && info.city){
-            pilot = await Pilot.find({$and:[{"categorie" : info.categorie},{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
+            pilot = await Pilot.find({$and:[{"categorie" : info.categorie},{"department" : parseInt(info.departmentID)},{"city":info.city}]}).populate("media");
           }else if(info.departmentID && info.city){
-            pilot = await Pilot.find({$and:[{"departmentID" : parseInt(info.departmentID)},{"city":info.city}]});
+            pilot = await Pilot.find({$and:[{"department" : parseInt(info.departmentID)},{"city":info.city}]}).populate("media");
           }else if(info.categorie){
-            pilot = await Pilot.find({ "categorie" : info.categorie  });
+            pilot = await Pilot.find({ "categorie" : info.categorie  }).populate("media");
           }else if(info.departmentID){
-            pilot = await Pilot.find({ "departmentID" : parseInt(info.departmentID) });
+            pilot = await Pilot.find({ "department" : parseInt(info.departmentID) }).populate("media");
           }else if(info.city){
-            pilot = await Pilot.find({"city":info.city})
+            pilot = await Pilot.find({"city":info.city}).populate("media")
           }
       res.status(200).json(pilot)
     }catch (err){

@@ -7,7 +7,7 @@ const uniqueEmail = {
   async validator(email) {
     try {
       const pilot = await models.Pilot.findOne({ email });
-      const client = await model.Client.findOne({ email });
+      const client = await models.Client.findOne({ email });
       return (!pilot && !client);
     }
     catch (err) {
