@@ -98,6 +98,13 @@ module.exports = {
             { city: info.city },
           ],
         });
+      } else if (info.departmentID && info.categorie) {
+        solicitude = await Solicitude.find({
+          $and: [
+            { department: parseInt(info.departmentID) },
+            { servicetype: info.categorie },
+          ],
+        });
       } else if (info.categorie) {
         solicitude = await Solicitude.find({ servicetype: info.categorie });
       } else if (info.departmentID) {

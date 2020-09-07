@@ -89,7 +89,6 @@ module.exports = {
 
   async filter(req, res){
     const { info } = req.body
-    console.log(info)
     let pilot 
     try{  
           if(info.categorie && info.departmentID && info.city){
