@@ -89,15 +89,14 @@ module.exports = {
 
   async filter(req, res){
     const { info } = req.body
-    console.log(info)
     let pilot 
     try{  
           if(info.categorie && info.departmentID && info.city){
-            pilot = await Pilot.find({$and:[{"categorie" : info.categorie},{"department" : parseInt(info.departmentID)},{"city":info.city}]}).populate("media");
+            pilot = await Pilot.find({$and:[{"services.name" : info.categorie},{"department" : parseInt(info.departmentID)},{"city":info.city}]}).populate("media");
           }else if(info.departmentID && info.city){
             pilot = await Pilot.find({$and:[{"department" : parseInt(info.departmentID)},{"city":info.city}]}).populate("media");
           }else if(info.categorie){
-            pilot = await Pilot.find({ "categorie" : info.categorie  }).populate("media");
+            pilot = await Pilot.find({ "services.name" : info.categorie  }).populate("media");
           }else if(info.departmentID){
             pilot = await Pilot.find({ "department" : parseInt(info.departmentID) }).populate("media");
           }else if(info.city){

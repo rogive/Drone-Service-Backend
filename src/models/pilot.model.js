@@ -61,10 +61,21 @@ const pilotSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Media',
   }],
-  services: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Service',
-  }]
+  services:
+  {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": ["string", "null"]
+        }
+      },
+    }
+  }
 },{ 
   timestamps: true 
 })
