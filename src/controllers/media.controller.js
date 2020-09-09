@@ -26,7 +26,7 @@ module.exports = {
       const media = await Media.create({...data, pilot })
 
       pilot.media.push(media)
-      await pilot.save()
+      await pilot.save({validateBeforeSave: false})
 
       res.status(200).json(media);
     } catch (err) {

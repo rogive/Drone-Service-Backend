@@ -20,12 +20,12 @@ module.exports = {
     try {
       const data = req.body;
       const { pilotId }  = req.body;
-
+      
       const pilot = await Pilot.findById(pilotId)
       const service = await Service.create({...data, pilot})
 
       pilot.services.push(service)
-      await pilot.save()
+      await pilot.save({validateBeforeSave: false})
 
       const thisservice = await Service.findById(service._id)
       thisservice.pilots.push(pilot)
@@ -62,8 +62,21 @@ module.exports = {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const data = req.body;
-      const service = await Service.findByIdAndUpdate(id, data, { new: true })
+      const { pilotId }  = req.body;
+      const pilot = await Pilot.findById(pilotId)
+      const service = await Service.findById(id)
+      const { name }  = service;
+      const service2 = { id , name }
+
+      if(!service.pilots.includes(pilotId)){
+        service.pilots.push(pilot)
+
+        pilot.services.push(service2)
+
+        await pilot.save({validateBeforeSave: false})
+        await service.save()
+      }
+
 
       res.status(200).json(service);
     } catch (err) {

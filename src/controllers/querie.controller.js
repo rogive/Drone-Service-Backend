@@ -29,10 +29,9 @@ module.exports = {
 
       const client = await Client.findById(clientId)
       const querie = await Querie.create({...data, client })
-      console.log(querie)
 
       client.queries.push(querie)
-      await client.save()
+      await client.save({validateBeforeSave: false})
 
       res.status(200).json(querie);
     } catch (err) {

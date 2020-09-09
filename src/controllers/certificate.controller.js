@@ -28,7 +28,7 @@ module.exports = {
       const certificate = await Certificate.create({data})
 
       pilot.certificates.push(certificate)
-      await pilot.save()
+      await pilot.save({validateBeforeSave: false})
 
       res.status(200).json(certificate);
     } catch (err) {
