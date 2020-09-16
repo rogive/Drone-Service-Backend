@@ -69,8 +69,11 @@ module.exports = {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const data = req.body;
-      const pilot = await Pilot.findByIdAndUpdate(id, data, { new: true })
+      const { data } = req.body;
+      const pilot = await Pilot.findByIdAndUpdate(id, data, {
+        new: true,
+        useFindAndModify: false,
+      });
       res.status(200).json(pilot);
     } catch (err) {
       res.status(400).json(err);

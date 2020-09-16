@@ -30,7 +30,7 @@ const pilotSchema = new Schema({
     type: String,
     required: [ true, 'El campo E-Mail es requerido' ],
     match: [ emailRegexp, 'E-mail inválido'],
-    validate: [ uniqueEmail ],
+    validator: [ uniqueEmail ],
   },
   password: {
     type: String,
@@ -79,26 +79,6 @@ const pilotSchema = new Schema({
 },{ 
   timestamps: true 
 })
-
-
-
-/* 
-certificates: [{
-  type: Schema.Types.ObjectId,
-  ref: 'Certificate',
-}],
-media: [{
-  type: Schema.Types.ObjectId,
-  ref: 'Media',
-}],
-services: [{
-  type: Schema.Types.ObjectId,
-  ref: 'Service',
-}]
-}
- */
-
-
 
 const Pilot = model('Pilot',pilotSchema)
 
