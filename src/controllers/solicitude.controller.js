@@ -83,7 +83,7 @@ module.exports = {
     const { info } = req.body;
     const { pilotId } = req.body;
     let solicitude;
-    let selectCriteria = "name phone";
+    let selectCriteria = "phone";
     try {
       if (info.categorie && info.departmentID && info.city) {
         solicitude = await Solicitude.find({
@@ -138,31 +138,23 @@ module.exports = {
       const pilot = await Pilot.findById(pilotId);
       const payedSolicitudes = pilot.payedSolicitudes;
 
-      // for (const element of solicitude) {
-      //   let check = payedSolicitudes.find(e => e.toString() === element._id.toString())
-      //   console.log(element)
-      //   console.log(check)
-      //   if (!check) {
-      //     element.client.phone = "3XX XXX XXXX";
-      //   }
-      //   console.log(element)
-      // }
-
-      const payedFilter = solicitude.filter(element => {
-        if(payedSolicitudes.find(e => e.toString() === element._id.toString())) return true
-        return false
-      })
-
-      const unpayedFilter = solicitude.filter(element => {
-        if(payedSolicitudes.find(e => e.toString() === element._id.toString())) return false
-        return true
-      })
-
-      for (const element of unpayedFilter) {
-        element.client.phone = "3XX XXX XXXX";
+      if (solicitude) {
+        const payedFilter = solicitude.filter(element => {
+          if(payedSolicitudes.find(e => e.toString() === element._id.toString())) return true;
+          return false;
+        })
+  
+        const unpayedFilter = solicitude.filter(element => {
+          if(payedSolicitudes.find(e => e.toString() === element._id.toString())) return false;
+          return true;
+        })
+  
+        for (const element of unpayedFilter) {
+          element.client.phone = "3XX XXX XXXX";
+        }
+        
+        solicitude = [...payedFilter, ...unpayedFilter];
       }
-      
-      solicitude = [...payedFilter, ...unpayedFilter]
       
       res.status(200).json(solicitude);
     } catch (err) {
@@ -185,9 +177,3 @@ module.exports = {
     }
   }
 };
-
-
-// .populate({
-//   path: "client",
-//   select: selectCriteria, 
-// })
