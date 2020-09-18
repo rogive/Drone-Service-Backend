@@ -8,5 +8,6 @@ router.route("/listar/cliente/:id").get(solicitudeController.showclient);
 router.route("/actualizar/:id").put(solicitudeController.update);
 router.route("/eliminar/:id").delete(solicitudeController.destroy);
 router.route("/filtrar").post(solicitudeController.filter);
+router.route("/pagarSolicitud").put(solicitudeController.paySolicitude);
 
 module.exports = router;
