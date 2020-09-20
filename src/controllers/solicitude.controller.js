@@ -139,6 +139,11 @@ module.exports = {
       const payedSolicitudes = pilot.payedSolicitudes;
 
       if (solicitude) {
+
+        for (const element of solicitude) {
+          element.phone = element.client.phone
+        }
+
         const payedFilter = solicitude.filter(element => {
           if(payedSolicitudes.find(e => e.toString() === element._id.toString())) return true;
           return false;
@@ -150,7 +155,7 @@ module.exports = {
         })
   
         for (const element of unpayedFilter) {
-          element.client.phone = "3XX XXX XXXX";
+          element.phone = "3XX XXX XXXX";
         }
         
         solicitude = [...payedFilter, ...unpayedFilter];
