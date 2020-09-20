@@ -133,6 +133,11 @@ module.exports = {
           path: "client",
           select: selectCriteria, 
         });
+      } else {
+        solicitude = await Solicitude.find({}).populate({
+          path: "client",
+          select: selectCriteria, 
+        });
       }
 
       const pilot = await Pilot.findById(pilotId);
