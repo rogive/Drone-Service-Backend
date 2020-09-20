@@ -30,7 +30,7 @@ const clientSchema = new Schema({
     type: String,
     required: [ true, 'El campo E-Mail es requerido' ],
     match: [ emailRegexp, 'E-mail inválido'],
-    validator: [ uniqueEmail ],
+    validate: [ uniqueEmail ],
   },
   password: {
     type: String,
