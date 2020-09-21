@@ -26,6 +26,9 @@ const pilotSchema = new Schema({
     type: String,
     required: [ true, 'El campo apellidos es requerido' ]
   },
+  description: {
+    type: String
+  },
   email: {
     type: String,
     required: [ true, 'El campo E-Mail es requerido' ],
