@@ -64,6 +64,10 @@ const pilotSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Media',
   }],
+  payedSolicitudes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Solicitude',
+  }],
   services:
   {
     "type": "array",

@@ -14,7 +14,7 @@ const uniqueEmail = {
       return false;
     }
   },
-  message: 'El email ya existe1'
+  message: 'El email ya existe'
 }
 
 const clientSchema = new Schema({ 

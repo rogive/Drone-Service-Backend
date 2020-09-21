@@ -41,7 +41,8 @@ const requestSchema = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'Client', 
     require: true
-  }
+  },
+  phone: String
 },
 {
   timestamps: true,
