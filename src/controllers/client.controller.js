@@ -32,7 +32,6 @@ module.exports = {
       const client = await Client.findOne({ email });
 
       if (!client) {
-        console.log("entro aqui");
         throw Error("El usuario no existe");
       }
 
