@@ -25,7 +25,7 @@ module.exports = {
       const { pilotId }  = req.body;
 
       const pilot = await Pilot.findById(pilotId)
-      const certificate = await Certificate.create({data})
+      const certificate = await Certificate.create({...data, pilot})
 
       pilot.certificates.push(certificate)
       await pilot.save({validateBeforeSave: false})
@@ -50,7 +50,7 @@ module.exports = {
   async showpilot(req, res) {
     try {
       const { id } = req.params;
-      const certificate = await Certificate.find({pilotId: id});
+      const certificate = await Certificate.find({pilot: id});
 
       res.status(200).json(certificate);
     } catch (err) {
