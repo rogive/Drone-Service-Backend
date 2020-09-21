@@ -1,16 +1,15 @@
-const { Schema, model, models } = require('mongoose')
+const { Schema, model, models } = require("mongoose");
 
 const emailRegexp = /((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))/;
-const phoneRegexp = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\./0-9]*$/
+const phoneRegexp = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\./0-9]*$/;
 
 const uniqueEmail = {
   async validator(email) {
     try {
       const pilot = await models.Pilot.findOne({ email });
       const client = await models.Client.findOne({ email });
-      return (!pilot && !client);
-    }
-    catch (err) {
+      return !pilot && !client;
+    } catch (err) {
       return false;
     }
   },
@@ -53,14 +52,11 @@ const clientSchema = new Schema({
     type: String,
     required: [ true, 'El tipo de usuario no está definido, intente registrarse nuevamente']
   },
-  solicitudes: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Solicitude',
-  }]
-},{ 
-  timestamps: true 
-})
+  {
+    timestamps: true,
+  }
+);
 
-const Client = model('Client',clientSchema)
+const Client = model("Client", clientSchema);
 
-module.exports = Client
+module.exports = Client;
