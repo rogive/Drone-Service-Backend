@@ -30,8 +30,6 @@ module.exports = {
     try {
       const { email, password } = req.body;
       const pilot = await Pilot.findOne({ email });
-      console.log(pilot);
-
       if (!pilot) {
         throw Error("El usuario no existe");
       }
