@@ -26,6 +26,9 @@ const pilotSchema = new Schema({
     type: String,
     required: [ true, 'El campo apellidos es requerido' ]
   },
+  description: {
+    type: String
+  },
   email: {
     type: String,
     required: [ true, 'El campo E-Mail es requerido' ],
@@ -61,6 +64,10 @@ const pilotSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Media',
   }],
+  payedSolicitudes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Solicitude',
+  }],
   services:
   {
     "type": "array",
@@ -79,26 +86,6 @@ const pilotSchema = new Schema({
 },{ 
   timestamps: true 
 })
-
-
-
-/* 
-certificates: [{
-  type: Schema.Types.ObjectId,
-  ref: 'Certificate',
-}],
-media: [{
-  type: Schema.Types.ObjectId,
-  ref: 'Media',
-}],
-services: [{
-  type: Schema.Types.ObjectId,
-  ref: 'Service',
-}]
-}
- */
-
-
 
 const Pilot = model('Pilot',pilotSchema)
 

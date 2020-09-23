@@ -1,5 +1,6 @@
 const Solicitude = require("../models/solicitude.model");
 const Client = require("../models/client.model");
+const Pilot = require("../models/pilot.model");
 
 module.exports = {
   async list(req, res) {
@@ -80,7 +81,9 @@ module.exports = {
 
   async filter(req, res) {
     const { info } = req.body;
+    const { pilotId } = req.body;
     let solicitude;
+    let selectCriteria = "phone";
     try {
       if (info.categorie && info.departmentID && info.city) {
         solicitude = await Solicitude.find({
@@ -89,6 +92,9 @@ module.exports = {
             { department: parseInt(info.departmentID) },
             { city: info.city },
           ],
+        }).populate({
+          path: "client",
+          select: selectCriteria, 
         });
       } else if (info.departmentID && info.city) {
         solicitude = await Solicitude.find({
@@ -96,6 +102,9 @@ module.exports = {
             { department: parseInt(info.departmentID) },
             { city: info.city },
           ],
+        }).populate({
+          path: "client",
+          select: selectCriteria, 
         });
       } else if (info.departmentID && info.categorie) {
         solicitude = await Solicitude.find({
@@ -103,19 +112,78 @@ module.exports = {
             { department: parseInt(info.departmentID) },
             { servicetype: info.categorie },
           ],
+        }).populate({
+          path: "client",
+          select: selectCriteria, 
         });
       } else if (info.categorie) {
-        solicitude = await Solicitude.find({ servicetype: info.categorie });
+        solicitude = await Solicitude.find({ servicetype: info.categorie }).populate({
+          path: "client",
+          select: selectCriteria, 
+        });
       } else if (info.departmentID) {
         solicitude = await Solicitude.find({
           department: parseInt(info.departmentID),
+        }).populate({
+          path: "client",
+          select: selectCriteria, 
         });
       } else if (info.city) {
-        solicitude = await Solicitude.find({ city: info.city });
+        solicitude = await Solicitude.find({ city: info.city }).populate({
+          path: "client",
+          select: selectCriteria, 
+        });
+      } else {
+        solicitude = await Solicitude.find({}).populate({
+          path: "client",
+          select: selectCriteria, 
+        });
       }
+
+      const pilot = await Pilot.findById(pilotId);
+      const payedSolicitudes = pilot.payedSolicitudes;
+
+      if (solicitude) {
+
+        for (const element of solicitude) {
+          element.phone = element.client.phone
+        }
+
+        const payedFilter = solicitude.filter(element => {
+          if(payedSolicitudes.find(e => e.toString() === element._id.toString())) return true;
+          return false;
+        })
+  
+        const unpayedFilter = solicitude.filter(element => {
+          if(payedSolicitudes.find(e => e.toString() === element._id.toString())) return false;
+          return true;
+        })
+  
+        for (const element of unpayedFilter) {
+          element.phone = "3XX XXX XXXX";
+        }
+        
+        solicitude = [...payedFilter, ...unpayedFilter];
+      }
+      
       res.status(200).json(solicitude);
     } catch (err) {
       console.log(err);
     }
   },
+
+  async paySolicitude(req, res) {
+    try {
+      const { pilotId } = req.body;
+      const { solicitudeId } = req.body;
+      const pilot = await Pilot.findById(pilotId);
+
+      pilot.payedSolicitudes.push(solicitudeId);
+      await pilot.save({ validateBeforeSave: false });
+
+      res.status(200).json('Pago exitoso');
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  }
 };

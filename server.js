@@ -18,7 +18,7 @@ db();
 app.use(cors());
 app.use(express.json());
 
-app.use("/pilotos", pilotRouter);
+app.use("/pilot", pilotRouter);
 app.use("/media", mediaRouter);
 app.use("/client", clientRouter);
 app.use("/solicitudes", solicitudeRouter);
