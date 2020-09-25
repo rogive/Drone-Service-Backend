@@ -26,7 +26,6 @@ module.exports = {
 
       const pilot = await Pilot.findById(pilotId)
       const certificate = await Certificate.create({...data, pilot})
-
       pilot.certificates.push(certificate)
       await pilot.save({validateBeforeSave: false})
 
