@@ -1,5 +1,5 @@
 const express = require('express');
-const Certificate = require('../models/certificate.model');
+const Other = require('../models/other.model');
 const app = express();
 const Pilot = require('../models/pilot.model');
 
@@ -8,12 +8,12 @@ module.exports = {
   async list(req, res) {
     try {
 
-      const certificate = await Certificate.find()
+      const other = await Other.find()
       .populate({
         path: 'pilot',
-        select: '_id name', // separados por un espacio
+        select: '_id name',
       })
-      res.status(200).json(certificate);
+      res.status(200).json(other);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -25,11 +25,11 @@ module.exports = {
       const { pilotId }  = req.body;
 
       const pilot = await Pilot.findById(pilotId)
-      const certificate = await Certificate.create({...data, pilot})
-      pilot.certificates.push(certificate)
+      const other = await Other.create({...data, pilot})
+      pilot.others.push(other)
       await pilot.save({validateBeforeSave: false})
 
-      res.status(200).json(certificate);
+      res.status(200).json(other);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -38,9 +38,9 @@ module.exports = {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const certificate = await Certificate.findById(id);
+      const other = await Other.findById(id);
 
-      res.status(200).json(certificate);
+      res.status(200).json(other);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
@@ -49,9 +49,9 @@ module.exports = {
   async showpilot(req, res) {
     try {
       const { id } = req.params;
-      const certificate = await Certificate.find({pilot: id});
+      const other = await Other.find({pilot: id});
 
-      res.status(200).json(certificate);
+      res.status(200).json(other);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }
@@ -61,9 +61,9 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const certificate = await Certificate.findByIdAndUpdate(id, data, { new: true })
+      const other = await Other.findByIdAndUpdate(id, data, { new: true })
 
-      res.status(200).json(certificate);
+      res.status(200).json(other);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -72,9 +72,9 @@ module.exports = {
   async destroy(req, res) {
     try {
       const { id } = req.params;
-      const certificate = await Certificate.findByIdAndDelete(id)
+      const other = await Other.findByIdAndDelete(id)
 
-      res.status(200).json(certificate);
+      res.status(200).json(other);
     } catch (err) {
       res.status(400).json({ message: `Could not find task with id ${id}` });
     }

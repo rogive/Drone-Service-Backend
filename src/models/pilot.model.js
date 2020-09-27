@@ -63,6 +63,9 @@ const pilotSchema = new Schema({
   flightlogs: [{
     type: Schema.Types.ObjectId,
     ref: 'FlighLog',
+  others: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Other',
   }],
   media: [{
     type: Schema.Types.ObjectId,
