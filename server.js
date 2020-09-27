@@ -7,6 +7,7 @@ const clientRouter = require("./src/routes/client");
 const solicitudeRouter = require("./src/routes/solicitude");
 const certificateRouter = require("./src/routes/certificate");
 const serviceRouter = require("./src/routes/service");
+const equipmentRouter = require("./src/routes/equipment");
 const { auth } = require("./src/utils/middlewares");
 
 const db = require("./src/db");
@@ -22,7 +23,8 @@ app.use("/pilot", pilotRouter);
 app.use("/media", mediaRouter);
 app.use("/client", clientRouter);
 app.use("/solicitudes", solicitudeRouter);
-app.use("/certificados", certificateRouter);
+app.use("/certificates", certificateRouter);
 app.use("/servicios", serviceRouter);
+app.use("/equipments", equipmentRouter);
 
 app.listen(port, () => console.log("App listening localhost:8000"));
