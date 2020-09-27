@@ -16,7 +16,7 @@ const flightlogSchema = new Schema({
   model: String,
   flighttime: {
     type: String,
-    required: [ true, 'Se requiere una cantidad de despegues y aterrizajes para esta accion' ]
+    required: [ true, 'Se requiere una cantidad de horas de vuelo para esta acción para esta accion' ]
   },
   takeoffs: {
     type: String,
