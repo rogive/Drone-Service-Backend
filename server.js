@@ -22,7 +22,7 @@ app.use("/pilot", pilotRouter);
 app.use("/media", mediaRouter);
 app.use("/client", clientRouter);
 app.use("/solicitudes", solicitudeRouter);
-app.use("/certificados", certificateRouter);
+app.use("/certificates", certificateRouter);
 app.use("/servicios", serviceRouter);
 
 app.listen(port, () => console.log("App listening localhost:8000"));
