@@ -60,6 +60,10 @@ const pilotSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Certificate',
   }],
+  equipments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Equipment',
+  }],
   media: [{
     type: Schema.Types.ObjectId,
     ref: 'Media',
