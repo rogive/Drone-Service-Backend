@@ -60,6 +60,9 @@ const pilotSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Certificate',
   }],
+  flightlogs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'FlighLog',
   others: [{
     type: Schema.Types.ObjectId,
     ref: 'Other',

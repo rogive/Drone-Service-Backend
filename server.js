@@ -7,6 +7,7 @@ const clientRouter = require("./src/routes/client");
 const solicitudeRouter = require("./src/routes/solicitude");
 const certificateRouter = require("./src/routes/certificate");
 const serviceRouter = require("./src/routes/service");
+const flightlogRouter = require("./src/routes/flightlog");
 const otherRouter = require("./src/routes/other");
 const { auth } = require("./src/utils/middlewares");
 
@@ -25,6 +26,7 @@ app.use("/client", clientRouter);
 app.use("/solicitudes", solicitudeRouter);
 app.use("/certificates", certificateRouter);
 app.use("/servicios", serviceRouter);
+app.use("/flightlogs", flightlogRouter);
 app.use("/others", otherRouter);
 
 app.listen(port, () => console.log("App listening localhost:8000"));
