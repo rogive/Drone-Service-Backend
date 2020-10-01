@@ -42,7 +42,9 @@ const requestSchema = new Schema({
     ref: 'Client', 
     require: true
   },
-  phone: String
+  phone: String,
+  clientName: String,
+  clientEmail: String,
 },
 {
   timestamps: true,
