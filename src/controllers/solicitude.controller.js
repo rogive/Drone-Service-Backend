@@ -83,7 +83,7 @@ module.exports = {
     const { info } = req.body;
     const { pilotId } = req.body;
     let solicitude;
-    let selectCriteria = "phone";
+    let selectCriteria = "phone name email";
     try {
       if (info.categorie && info.departmentID && info.city) {
         solicitude = await Solicitude.find({
@@ -146,7 +146,9 @@ module.exports = {
       if (solicitude) {
 
         for (const element of solicitude) {
+          element.clientName = element.client.name
           element.phone = element.client.phone
+          element.clientEmail = element.client.email
         }
 
         const payedFilter = solicitude.filter(element => {
@@ -160,7 +162,9 @@ module.exports = {
         })
   
         for (const element of unpayedFilter) {
-          element.phone = "3XX XXX XXXX";
+          element.clientName = element.clientName.substr(0,3) + element.clientName.slice(3).replace(/[\w!#$%^&*(),?ÁáÉéÍíÓóÚúÄäËëÏïÖöÜü":{}|<>]/g,'x')
+          element.phone = element.phone.substr(0,3) + element.phone.slice(3).replace(/\d/g,'x')
+          element.clientEmail = element.clientEmail.substr(0,3) + element.clientEmail.slice(3).replace(/[\w!#$%^&*(),?ÁáÉéÍíÓóÚúÄäËëÏïÖöÜü":{}|<>]/g,'x')
         }
         
         solicitude = [...payedFilter, ...unpayedFilter];
