@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
-const { url } = require("./key");
 
 function db() {
-
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   };
 
-  mongoose.connect(url, options);
+  mongoose.connect(process.env.URL_DB, options);
   
   const { connection } = mongoose;
   
